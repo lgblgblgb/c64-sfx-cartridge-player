@@ -2,7 +2,7 @@
 
 = Introduction =
 
-AdLib was a famous sound card for PCs before the SoundBlaster era.
+AdLib was a famous sound card for PCs before the Sound Blaster era.
 
 = Details =
 
