@@ -1,0 +1,15 @@
+#summary IMF file format.
+
+= Introduction =
+
+IMF file format is similar to [DRO]: it contains raw [AdLib] register events (register number, register data) and timing information.
+
+= Details =
+
+However, IMF compared to [DRO] is harder to play:
+
+ * usually it cause larger files than [DRO]
+ * there are many versions with or without header, etc. Even "official" information on the format seems to be not true on the ones I am working as test IMF songs
+ * the "speed" information which is needed ot interpret the timing events is not stored in the file, so you must know and specify it before playing
+
+These are also reasons that current C64 player does not support IMF files directly but you need a conversion done on your PC first.
