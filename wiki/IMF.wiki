@@ -2,7 +2,7 @@
 
 = The IMF format =
 
-IMF file format is similar to [DRO]: it contains raw [AdLib] register events (register number, register data) and timing information.
+IMF (id Software Music Format) file format is similar to [DRO]: it contains raw [AdLib] register events (register number, register data) and timing information.
 
 = Consideration =
 
