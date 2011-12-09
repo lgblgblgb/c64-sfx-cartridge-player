@@ -6,7 +6,7 @@ My original idea is about interfacing with ISA cards by 8 bit machines (C64 is j
 
 So I decided to begin with a really simply card and I try to interace with it. I thought AdLib is simple enough and as a bonus, it has the nice result that you can hear something at least. Using an Ethernet card (what I wanted originally) is much harder as I would need to write some software for it too, which is a more complex task than simply sending out some bytes for the AdLib card.
 
-Still, since I am not so experienced (yet) about building digital circuits, I was at a loss a bit. Then I found this page: http://www.raphnet.net/electronique/adlib/adlib_en.php
+Still, since I am not so experienced (yet) about building digital circuits, I was at a loss a bit. Then I found *this page: http://www.raphnet.net/electronique/adlib/adlib_en.php *
 It's about connecting an AdLib card to the parallel port of a PC. Surely, it's not a C64 solution but it gives nice ideas how can I use AdLib (as a 8bit ISA card) to "drive" without a real ISA bus it's placed onto.
 
 The heart of the AdLib card is a chip called YM3812. At once I tried to search for "c64 ym3812" and surprisingly (for me) I got hits. It turned out that there is an existing solution already which does this: the [SFX SFX Sound Expander cartridge]. Though those units are equipped with an older chip (does not know OPL2) it can be replaced, and it seems some people did that.
