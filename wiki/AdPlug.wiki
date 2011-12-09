@@ -1,0 +1,7 @@
+#summary About AdPlug
+
+= AdPlug =
+
+From [http://adplug.sourceforge.net/ AdPlug]'s site: "AdPlug is a free, cross-platform, hardware independent AdLib sound player library, mainly written in C++ and released under the LGPL. AdPlug plays sound data, originally created for the AdLib (OPL2) and Sound Blaster (Dual OPL2/OPL3) audio boards, directly from its original format on top of an emulator or by using the real hardware. No OPL chip is required for playback."
+
+AdPlug's source is especially useful for me at my [IMF] problems (check that wiki page out). It seems the solution for that problem can be examined [http://adplug.cvs.sourceforge.net/viewvc/adplug/adplug/src/imf.cpp?view=markup&pathrev=MAIN in this source file].
