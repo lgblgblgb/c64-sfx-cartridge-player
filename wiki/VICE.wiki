@@ -7,3 +7,7 @@ VICE is a very nice emulator which can emulate various CBM machines on wide rang
 = Demo =
 
 I'm using VICE to test my player. You can visit the *[demo] page* where you can find a youtube video as well.
+
+== [SFX SFX Sound Expander cartridge] emulation problems on VICE ==
+
+It's nice that VICE can emulate [SFX the cartridge] (read [story my story] too), but it did not work for me (on Linux) causing either no sound or even crash of VICE. Others reported that it's more or less the same on Windows (however not always ... ?). Soci ([thanks see this]) suggested me to use the development snapshot of VICE checked out from their SVN repository. And it seems it works quite well! :)
