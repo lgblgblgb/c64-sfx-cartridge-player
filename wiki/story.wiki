@@ -8,3 +8,9 @@ So I decided to begin with a really simply card and I try to interace with it. I
 
 Still, since I am not so experienced (yet) about building digital circuits, I was at a loss a bit. Then I found this page: http://www.raphnet.net/electronique/adlib/adlib_en.php
 It's about connecting an AdLib card to the parallel port of a PC. Surely, it's not a C64 solution but it gives nice ideas how can I use AdLib (as a 8bit ISA card) to "drive" without a real ISA bus it's placed onto.
+
+The heart of the AdLib card is a chip called YM3812. At once I tried to search for "c64 ym3812" and surprisingly (for me) I got hits. It turned out that there is an existing solution already which does this: the [[SFX SFX Sound Expander cartridge]. Though those units are equipped with an older chip (does not know OPL2) it can be replaced, and it seems some people did that.
+
+What's the nice thing about this if I don't even have that [SFC cartridge] and how does it related to my original project? My problem was the lack of emulation software: I would really need to test my software first so I can tell I have to blame my software or hardware if it does not work at all. And the nice thing is here: [VICE] emulator does emulate this cartridge (note: the stable version seems to have problems, but the development one worked for me).
+
+Originally my plan was only test to create some sounds, but since file formats like [DRO] or [IMF] seems to be simple enough I've decided to write a player. Later probably more advanced formats too like [S3M] can be supported too. And I would like to have some loader code, so song does not need to be a compile-time option ...
