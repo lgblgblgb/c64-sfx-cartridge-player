@@ -7,4 +7,4 @@ However we need YM3812 chip as it's [hardware#Modifying%20your%20SFX%20cartridge
 
 Additional information on this hardware: http://www.floodgap.com/retrobits/ckb/secret/sfx.html
 
-More hardware related information: [hardware].
+More hardware related information (including the possibility to build an SFX Cartridge compatible stuff using a spare AdLib ISA card for PC): [hardware].
