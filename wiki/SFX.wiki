@@ -4,3 +4,5 @@
 This cartridge allowed for C64 to have even more music capabilities than using its SID chip. Please read [AdLib this wiki entry] as well.
 
 Additional information on this hardware: http://www.floodgap.com/retrobits/ckb/secret/sfx.html
+
+More hardware related information: [hardware].
