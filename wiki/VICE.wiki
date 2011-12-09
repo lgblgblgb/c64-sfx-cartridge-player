@@ -1,6 +1,6 @@
 #summary About the VICE emulator.
 
-= Introduction =
+= VICE, the versatile CBM emulator =
 
 VICE is a very nice emulator which can emulate various CBM machines on wide range of operating systems. You can learn more about VICE at: http://vice-emu.sourceforge.net/
 
