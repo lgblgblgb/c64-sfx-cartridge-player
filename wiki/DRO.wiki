@@ -2,7 +2,7 @@
 
 = The DRO format =
 
-DRO is the "AdLib register event capture" format of DOSBOX: http://www.dosbox.com/
+DRO (DOSBox Raw OPL) is the "AdLib register event capture" format of DOSBOX: http://www.dosbox.com/
 
 My C64 player only supports version 2 of this format and there is *no check* for that: any file is treated as a DRO one, even if it's not, so you must be careful with this! Also currently it's a compile time option to include the DRO file, you cannot select one to play on your C64!
 
