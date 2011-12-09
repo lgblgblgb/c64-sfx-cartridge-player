@@ -5,6 +5,10 @@ Currently it's a Commodore 64 only project. The needed extra hardware means [SFX
 
 If you don't have the needed hardware, you can still use an emulator. Even I do this. [VICE] can emulate the cartridge, but I had problems with the latest stable version. I recommend to check [VICE this page] out first. Also you can watch [demo the demo video] if you don't want to mess with the software to have some ideas how it sounds/looks like.
 
+== Modifying your SFX cartridge to have YM3812 chip ==
+
+AdLib (and early Sound Blasters which are AdLib compatible in hardware level) uses chip called YM3812. The cartridge does not shipped with this but with an older variant. You can use that too, but songs can sounds odd as OPL2 features are not supported by hardware. It's recommended to replace the chip, it's backward compatible so you won't loose functionality this way, only win.
+
 == Building your own hardware ==
 
 It's still a TODO (for me at least), though you can have some ideas (also there is a link there which can give some hints) [story here].
