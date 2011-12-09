@@ -4,6 +4,7 @@
 
 *Wiki Topics*
   * Hardware related
+    * [hardware Hardware related summary]
     * [SFX SFX Sound Expander cartridge for C64]
     * [AdLib AdLib sound card for PCs]
     * [story "My story" - the history of the project and plans]
