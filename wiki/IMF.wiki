@@ -1,5 +1,4 @@
 #summary IMF file format.
-#sidebar TableOfContents
 
 = The IMF format =
 
