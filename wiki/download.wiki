@@ -1,6 +1,6 @@
 #summary Download and compiling the player.
 
-= Introduction =
+= Download - Compilation - Usage =
 
 Currently you must download the source and compile it yourself.
 
