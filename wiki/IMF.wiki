@@ -25,3 +25,7 @@ http://www.shikadi.net/moddingwiki/IMF_Format
 You can find "some" here:
 
 ftp://modland.ziphoid.com/pub/modules/Ad%20Lib/Apogee/
+
+= My studies on IMF =
+
+After I realized that IMF format is not so a "standard" as even IMF descriptions seems to be not-always-true, I've decided to write an own specification based on the format manuals I could [http://www.shikadi.net/moddingwiki/IMF_Format find on the net] and also [AdPlug]'s source was a very nice help to understand the different "versions" of the header (or "headerless") IMF versions.
