@@ -1,0 +1,11 @@
+#summary About the S3M file format.
+
+= Introduction =
+
+S3M is the module format of the famous DOS based tracker Stream Tracker 3 from Future Crew.
+
+= Details =
+
+In general S3M is mostly known as a format like MOD or XM (using digital audio samples) but now my focus is on a not-so-widely known feature: it allowed to use AdLib "instruments" too instead of digital samples. It's a nice idea: formats like [DRO] and [IMF] are just "raw dump" of the register events you must write into the YM3812 registers. Yes that is simply but in general it's much longer than using some advanced file formats which defines instruments and does not work only at register level.
+
+*However this is only a plan currently.*
