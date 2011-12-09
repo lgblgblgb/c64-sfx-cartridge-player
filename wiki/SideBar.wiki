@@ -9,6 +9,9 @@
   * Software related
     * [AdPlug AdPlug player]
     * [VICE VICE CBM emulator]
+    * My player for C64
+      * [demo Demo of the player (video)]
+      * [download Download/compilation]
   * Formats
     * [IMF]
     * [DRO]
