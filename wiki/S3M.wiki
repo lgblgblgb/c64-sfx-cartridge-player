@@ -17,3 +17,9 @@ Various random resources:
  * http://lclevy.free.fr/mo3/s3m.txt
  * http://16-bits.org/s3m/
  * http://wiki.multimedia.cx/index.php?title=Scream_Tracker_3_Module
+
+However, I was not so successfull to find descriptions which are rather S3M (and module, in general) specific: descriptions of the "commands" used in patterns, the meaning of exact commands, and their representations (it's OK to say that command "S", but what does it mean, what hex value is used to represent that? Even that's a problem, though I was lazy to check out some open source player's source to find an answer, to be honest).
+
+= S3M files =
+
+ftp://modland.ziphoid.com/pub/modules/Ad%20Lib/Screamtracker%203/
