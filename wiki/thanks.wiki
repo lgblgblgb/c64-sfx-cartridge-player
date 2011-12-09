@@ -2,5 +2,5 @@
 
 I would like to thank for the help for the following people:
 
- * to Raj for testing it on a real hardware :)
- * to Soci for suggesting devel version of VICE to test with
+ * to Raj for testing it on a [SFX real hardware] :)
+ * to Soci for suggesting devel version of [VICE] to test with
