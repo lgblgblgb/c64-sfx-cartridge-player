@@ -1,0 +1,6 @@
+= Thanks for the help =
+
+I would like to thank for the help for the following people:
+
+ * to Raj for testing it on a real hardware :)
+ * to Soci for suggesting devel version of VICE to test with
