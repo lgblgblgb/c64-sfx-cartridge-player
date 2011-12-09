@@ -1,6 +1,5 @@
 #summary DRO format
-#sidebar TableOfContents
-
+#sidebar DRO
 
 = The DRO format =
 
