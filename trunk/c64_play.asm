@@ -52,6 +52,8 @@
 ; ---------------------------------------------------------------------
 ; What I could test with VICE (video):
 ;	http://www.youtube.com/watch?v=umiL62CPObg
+; Project can be found here:
+;	https://code.google.com/p/c64-sfx-cartridge-player/
 ; ---------------------------------------------------------------------
 ; TODO list:
 ;	* rework the player to use IRQ for playing
