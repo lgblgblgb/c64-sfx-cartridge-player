@@ -12,7 +12,7 @@ However, IMF compared to [DRO] is harder to play:
  * there are many versions with or without header, etc. Even "official" information on the format seems to be not true on the ones I am working as test IMF songs
  * the "speed" information which is needed ot interpret the timing events is not stored in the file, so you must know and specify it before playing
 
-These are also reasons that current C64 player does not support IMF files directly but you need a conversion done on your PC first. Direct support for IMF files are planned though (in the future). My converter can be found in the source repository with name [https://code.google.com/p/c64-sfx-cartridge-player/source/browse/trunk/imf2dro.c imf2dro.c].
+These are also reasons that current C64 player does not support IMF files directly but you need a conversion done on your PC first. Direct support for IMF files are planned though (in the future). My converter can be found in the source repository with name [https://code.google.com/p/c64-sfx-cartridge-player/source/browse/trunk/imf2dro.c imf2dro.c]. If I understand all (well, most) of the "problems" with IMF (see later above: "My studies on IMF") and I can be quite sure it converts all different IMFs I have access for as valid DROs (which hears that it make sense)I will re-consider to write a native C64 loader/player code into my player, so no conversion will be needed then.
 
 = Details =
 
