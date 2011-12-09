@@ -1,4 +1,4 @@
-== Wiki Topics ==
+=== Wiki Topics ===
   * Hardware related
     * [SFX SFX Sound Expander cartridge for C64]
     * [AdLib AdLib sound card for PCs]
@@ -9,4 +9,4 @@
     * [IMF]
     * [DRO]
     * [S3M]
-== External resources ==
+=== External resources ===
