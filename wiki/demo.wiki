@@ -2,6 +2,7 @@
 
 = Demo - using VICE emulator =
 
-I'm using the [VICE] emulator to test my player during the development. You can watch this youtube video ([http://www.youtube.com/watch?v=umiL62CPObg direct link]), but please note: I am not sure that [VICE] emulates the SFX cartridge (with YM3812 chip) perfectly, so it's possible that it sounds a bit different on a real hardware.
+I'm using the [VICE] emulator to test my player during the development. You can watch this youtube video ([http://www.youtube.com/watch?v=umiL62CPObg direct link]), but please note: I am not sure that [VICE] emulates the SFX cartridge (with YM3812 chip) perfectly, so it's possible that it sounds a bit different on the [SFX real hardware].
+
 
 <wiki:video url="http://www.youtube.com/watch?v=umiL62CPObg"/>
