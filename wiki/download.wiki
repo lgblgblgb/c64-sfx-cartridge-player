@@ -8,8 +8,8 @@ Currently you must download the source and compile it yourself.
 
 == Getting the source ==
 
-You can check out [http://code.google.com/p/lgb-test/source/checkout the SVN repository], or you can try to [http://code.google.com/p/lgb-test/source/browse/#svn%2Ftrunk browse it], if using SVN is "alien" for you (only the source of the player: [http://lgb-test.googlecode.com/svn/trunk/c64_play.asm]).
+You can check out [http://code.google.com/p/c64-sfx-cartridge-player/source/checkout the SVN repository], or you can try to [http://code.google.com/p/c64-sfx-cartridge-player/source/browse/#svn%2Ftrunk browse it], if using SVN is "alien" for you (only the source of the player: [http://c64-sfx-cartridge-player.googlecode.com/svn/trunk/c64_play.asm]).
 
 == Compilation and usage ==
 
-You should read the assembly source file [http://code.google.com/p/lgb-test/source/browse/trunk/c64_play.asm c64_play.asm], it contains tons of comments at the beginning including these information.
+You should read the assembly source file [http://code.google.com/p/c64-sfx-cartridge-player/source/browse/trunk/c64_play.asm c64_play.asm], it contains tons of comments at the beginning including these information.
