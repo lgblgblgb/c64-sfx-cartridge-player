@@ -19,3 +19,9 @@ These are also reasons that current C64 player does not support IMF files direct
 http://www.shikadi.net/moddingwiki/IMF_Format
 
 *However* it seems that situation is not so simple. For example the IMF files I have there is a 4 bytes long "size" information, while the format description mention only 2 bytes long one. It's worth to mention that [AdPlug]'s play utility (adplay) seems to play those anyway. So it seems the most accurate format description can be got by inspecting [AdPlug]'s source :) For more information, check wiki page for [AdPlug] out.
+
+= IMF files =
+
+You can find "some" here:
+
+ftp://modland.ziphoid.com/pub/modules/Ad%20Lib/Apogee/
