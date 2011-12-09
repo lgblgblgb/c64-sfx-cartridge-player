@@ -4,3 +4,7 @@
 Currently it's a Commodore 64 only project. The needed extra hardware means [SFX SFX Sound Expander cartridge] (with an YM3812 chip!) at the moment. But please read [story my story] about my original plans and ideas.
 
 If you don't have the needed hardware, you can still use an emulator. Even I do this. [VICE] can emulate the cartridge, but I had problems with the latest stable version. I recommend to check [VICE this page] out first. Also you can watch [demo the demo video] if you don't want to mess with the software to have some ideas how it sounds/looks like.
+
+== Building your own hardware ==
+
+It's still a TODO (for me at least), though you can have some ideas (also there is a link there which can give some hints) [story here].
