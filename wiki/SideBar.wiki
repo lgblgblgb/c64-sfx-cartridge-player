@@ -1,6 +1,6 @@
 #summary SideBar navigation
 #sidebar NOPE
-==== Wiki Topics ====
+*Wiki Topics*
   * *[https://code.google.com/p/c64-sfx-cartridge-player/ PROJECT HOME]*
   * Hardware related
     * [SFX SFX Sound Expander cartridge for C64]
@@ -16,5 +16,5 @@
     * [IMF]
     * [DRO]
     * [S3M]
-==== External resources ====
+*External resources*
   * [https://plus.google.com/u/0/b/112757833242094880824/ My retro computing G+]
