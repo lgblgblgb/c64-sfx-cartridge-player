@@ -4,7 +4,7 @@
 
 CC65 (http://www.cc65.org/) is a C compiler suite for 6502 (and similar) CPU. As assembler for my projects targeting machines with this (or compatible) CPUs I usually choose the assembler (and linker) of the CC65 package.
 
-So don't be confused: even if I say, you need cc65 installed to compile my software, it's an assembly project (I just don't use the C compiler).
+So don't be confused: even if I say, you need cc65 installed to compile my software, it's an assembly project (*I just don't use the C compiler part*).
 
 == Installing cc65 on your PC ==
 
