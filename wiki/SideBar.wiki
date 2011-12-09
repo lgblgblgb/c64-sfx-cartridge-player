@@ -1,7 +1,7 @@
 #summary SideBar navigation
 #sidebar NOPE
+*[https://code.google.com/p/c64-sfx-cartridge-player/ PROJECT HOME]*
 *Wiki Topics*
-  * *[https://code.google.com/p/c64-sfx-cartridge-player/ PROJECT HOME]*
   * Hardware related
     * [SFX SFX Sound Expander cartridge for C64]
     * [AdLib AdLib sound card for PCs]
