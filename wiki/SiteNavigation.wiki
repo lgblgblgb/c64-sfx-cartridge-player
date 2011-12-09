@@ -1,0 +1,5 @@
+#summary Site navigation hints page.
+
+= Site navigation =
+
+If you are not on the "Project Home" location, use the siderbar at the left to navigate more easly. Note: not all wiki pages are there though.
