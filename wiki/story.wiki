@@ -2,9 +2,9 @@
 
 = Story of this project =
 
-My original idea is about interfacing with ISA cards by 8 bit machines (C64 is just one example). A general-purpose ISA bus solution is not to easy to build, you have to deal with DMA, onboard RAM of some cards and so on (I don't even want to mention too much that the situation is even more complex with 16 bit ISA cards).
+My original idea is about interfacing with ISA cards by 8 bit machines (C64 is just one example), originally to have cheap Ethernet solution for various 8 bit machines (yes, C64 has some, but first: it's expensive compared to the fact that you have spare ISA Ethernet cards at home, and second: there are much more 8 bit machines than only C64). A general-purpose ISA bus solution is not to easy to build, you have to deal with DMA, onboard RAM of some cards and so on (I don't even want to mention too much that the situation is even more complex with 16 bit ISA cards).
 
-So I decided to begin with a really simply card and I try to interace with it. I thought AdLib is simple enough and as a bonus, it alrady has the nice result that you can hear something at least. Using an Ethernet card (what I wanted originally) is much harder as I would need to write some software for it too, which is a more complex task than simply sending out some bytes for the AdLib card.
+So I decided to begin with a really simply card and I try to interace with it. I thought AdLib is simple enough and as a bonus, it has the nice result that you can hear something at least. Using an Ethernet card (what I wanted originally) is much harder as I would need to write some software for it too, which is a more complex task than simply sending out some bytes for the AdLib card.
 
 Still, since I am not so experienced (yet) about building digital circuits, I was at a loss a bit. Then I found this page: http://www.raphnet.net/electronique/adlib/adlib_en.php
 It's about connecting an AdLib card to the parallel port of a PC. Surely, it's not a C64 solution but it gives nice ideas how can I use AdLib (as a 8bit ISA card) to "drive" without a real ISA bus it's placed onto.
