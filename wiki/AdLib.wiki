@@ -6,6 +6,6 @@ AdLib was a famous sound card for PCs before the Sound Blaster era.
 
 = Details =
 
-AdLib has only OPL2 FM synth abilities, no digital playback capabilities (later AdLib gold tried to target that issue, but it was a bit late as SoundBlaster was quite comment for that time which was also cheaper and gave AdLib compatibility as well).
+AdLib has only OPL2 FM synth abilities, no digital playback capabilities (later AdLib gold tried to target that issue, but it was a bit late as Sound Blaster was quite comment for that time which was also cheaper and gave AdLib compatibility as well).
 
 The heart of AdLib is a chip named YM3812. Fortunately, it's not so hard to use something similar with a Commodore 64 either: the [SFX SFX Sound Expander cartridge] gave you this ability though the default chip was only an OPL (not OPL2) capable one. However some people replaced it with YM3812. I am not sure there are "original" cartridges with YM3812 chip though ...
