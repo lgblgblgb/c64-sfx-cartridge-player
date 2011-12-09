@@ -1,0 +1,4 @@
+#summary SFX Sound Expander cartridge.
+= Introduction =
+
+This cartridge allowed for C64 to have even more music capabilities than using its SID chip.
