@@ -1,3 +1,5 @@
+#summary SideBar navigation
+#sidebar NOPE
 ==== Wiki Topics ====
   * *[https://code.google.com/p/c64-sfx-cartridge-player/ PROJECT HOME]*
   * Hardware related
