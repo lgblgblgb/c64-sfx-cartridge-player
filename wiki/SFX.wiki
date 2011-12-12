@@ -8,3 +8,31 @@ However we need YM3812 chip as it's [hardware#Modifying%20your%20SFX%20cartridge
 Additional information on this hardware: http://www.floodgap.com/retrobits/ckb/secret/sfx.html
 
 More hardware related information (including the possibility to build an SFX Cartridge compatible stuff using a spare AdLib ISA card for PC): [hardware].
+
+== Details ==
+
+Anyway in nutshell: it seems, using the cartridge for playback is really simple. Like with AdLib, where you have I/O ports 388h and 389h, but you must use the following memory addresses instead:
+
+ * $DF40: selects the register
+ * $DF50: write (or read?) the selected register
+
+If you have YM3812 chip installed on your cartridge, this basically means that you have an "AdLib" card, just you have to use the mentioned memory locations instad of the I/O ports would be used on a PC with an AdLib cart. Also, the timing is similar: you have to wait some time between register accesses. From the mentioned resource, the following method is suggested:
+
+{{{
+; load x with register, a with data for that register
+  stx $df40               ; select ym3526 register
+  nop
+  nop
+  nop
+  nop                     ; wait 12 cycles for register select
+  sta $df50               ; write to it
+  ldx #4
+lup: 
+  dex
+  nop
+  bne lup                 ; wait 36 cycles to do the next write
+}}}
+
+Of course, if you have enough code between the accesses anyway, you don't need the dedicated wait.
+
+Currently I am not interesed in other nice features of the cartridge, like the piano-keyboard which can be also queried from your program.
