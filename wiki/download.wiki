@@ -15,7 +15,7 @@ You can check out [http://code.google.com/p/c64-sfx-cartridge-player/source/chec
 Note: I use Linux (but I guess, any UNIX like system is OK). If you have Windows, I can't help you, as I never had any Windows, I can't tell you how to install/compile things using Windows.
 
 You must have [cc65 CA65] installed, I use that as the assembler.
-Also you need to have installed [VICE] emulator to test the result but also to build disk image, since [VICE]'s c1541 tool is used. In addition you need GNU make and gcc (with the basic libc6 development libraries).
+Also you need to have installed [VICE] emulator to test the result but also to build disk image, since [VICE]'s c1541 tool is used. In addition you need GNU make and gcc (with the basic libc6 development libraries). Gcc is needed as imf2dro.c is a command line based tool to convert [IMF] files into [DRO] format. GNU make is needed as even the C64 source compilation is expressed by Makefile (however you can compile the source without it too, see the comments in the source of the player).
 
 == Compilation and usage ==
 
