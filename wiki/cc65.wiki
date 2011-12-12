@@ -6,7 +6,7 @@ CC65 (http://www.cc65.org/) is a C compiler suite for 6502 (and similar) CPU. As
 
 So don't be confused: even if I say, you need cc65 installed to compile my software, it's an assembly project (*I just don't use the C compiler part*).
 
-CA65 is the assembler of the CC65 package, LD65 is the linker. CL65 (what I use) is a "frontend" so you don't need to assemble+link "manually", that's all.
+CA65 is the assembler of the CC65 package, LD65 is the linker. CL65 (what I use) is a "frontend" so you don't need to assemble+link "manually" for simple projects, that's all.
 
 == Installing cc65 on your PC ==
 
