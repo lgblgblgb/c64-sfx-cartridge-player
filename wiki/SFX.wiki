@@ -36,3 +36,5 @@ lup:
 Of course, if you have enough code between the accesses anyway, you don't need the dedicated wait.
 
 Currently I am not interesed in other nice features of the cartridge, like the piano-keyboard which can be also queried from your program.
+
+About the meaning of the registers you can select then read/write: it's really same as with AdLib, so any AdLib documentation can tell that (again: it's true if you have YM3812 chip installed. If not, some features will be missed, no OPL2, also the [AdLib]'s detection method described by some resources won't work with the C64 then!). For more information, visit the link can be found [AdLib on this page].
