@@ -1,22 +1,37 @@
-/*  This utility converts IMF file to DRO, so you can include it into
+/*  -------------------------------------------------------------------
+ *  This utility converts IMF file to DRO, so you can include it into
  *  my DRO player to play it back on Commodore 64 equipped with SFX
  *  Sound Expander cartridge and YM3812 chip.
+ *  Note: I am planning to have IMF player on C64 without this converter too!
+ *  -------------------------------------------------------------------
+ *  This file is part of the "c64-sfx-cartridge-player" project.
+ *  You can access the project site of this source at (with wiki/doc etc too):
+ *  https://code.google.com/p/c64-sfx-cartridge-player/
+ *  -------------------------------------------------------------------
  *  (C)2011 Gábor Lénárt (LGB) lgb@lgb.hu
  *  License: GNU GPL 2 or 3 (you can choose) or any future later version.
+ *  License text (v2): http://www.gnu.org/licenses/gpl-2.0.html
+ *  License text (v3): http://www.gnu.org/licenses/gpl-3.0.html
+ *  -------------------------------------------------------------------
  *  Compile under UNIX-like systems with gcc:
  *  gcc -o imf2dro imf2dro.c
  *  On windows: I have no idea, try to figure out yourself :)
+ *  -------------------------------------------------------------------
  *  Usage (command line):
  *  ./imf2dro 280 inputfile.imf outputfile.dro
  *  The number (280) is just an example, it's the "speed info" which
- *  is not included in the file.
- *  For more info about the IFM format (it also describes what is "speed
+ *  is not included in the file (it's a major disadvantage of IMF format).
+ *  For more info about the IMF format (it also describes what is "speed
  *  info" and what values are used!):
- *  http://www.shikadi.net/moddingwiki/IMF_Format
+ *  https://code.google.com/p/c64-sfx-cartridge-player/wiki/IMF
+ * --------------------------------------------------------------------
  *  IMPORTANT NOTE:
- *  I don't care about DRO features till it's playable by my DRO
- *  player! So this converter is NOT SUITABLE for a general IMF to
- *  DRO conversion, it's only for my player! So you have been warned.
+ *  This converter - originally - is written by me to convert IMF files
+ *  to be playable with my DRO v2 only player. So I am not sure it's
+ *  a good choice for a general IMF->DRO converter. I try my best,
+ *  but I only test it with my own player! If you find bugs with the
+ *  produced DRO, please tell me!
+ *  -------------------------------------------------------------------
  */
 
 #include <stdio.h>
@@ -33,7 +48,7 @@
 #define MAX_IMF_FILE_SIZE 60000
 #define MAX_DRO_FILE_SIZE 60000
 
-static unsigned char ibuf[MAX_IMF_FILE_SIZE],obuf[MAX_DRO_FILE_SIZE];
+static unsigned char ibuf[MAX_IMF_FILE_SIZE+1],obuf[MAX_DRO_FILE_SIZE];
 static int speed;
 
 // DRO specific offsets in the file format:
@@ -43,7 +58,7 @@ static int speed;
 #define DRO_MINOR_VER_LO  	0x0A	// should be: 0
 #define DRO_MINOR_VER_HI	0x0B	// should be: 0
 #define DRO_LENGTH_UINT32LE	0x0C
-#define DRO_MS_UINT32LE		0x10	// TODO: we ignore this currently, as my player does not care about it!!
+#define DRO_MS_UINT32LE		0x10
 #define DRO_HW_TYPE		0x14	// should be: 0 (OPL2)
 #define DRO_FORMAT		0x15	// should be: 0 (interleaved)
 #define DRO_COMPRESSION		0x16	// should be: 0 (no compression)
@@ -89,7 +104,7 @@ static int codemap_allocate ( int reg )
 			obuf[a]=reg; // record it!
 			return a-DRO_CODEMAP_START;
 		}
-	fprintf(stderr,"Error: out of codemap space!\n");
+	fprintf(stderr,"CODEMAP: ERROR: out of codemap space!\n");
 	return -1;
 }
 
@@ -131,7 +146,8 @@ static int convert ( int size )
 		fprintf(stderr,"Bad IMF file: song data length must be multiple of 4, we got %d.\n",size);
 		return -1;
 	}
-	// just to be safe and to avoid setting zero values, we reset our output buffer
+	// just to be safe and to avoid the need of setting zero values later,
+	// we reset our output buffer
 	// which is part of the headers (minus id string) till the codemap table
 	memset(obuf+8,0,DRO_CODEMAP_START-8);
 	// but we want codemap part to be filled with the 'unused' value
@@ -181,21 +197,29 @@ static int convert ( int size )
 #			ifdef DEBUG
 			printf("Delay (msec): %d (on %d Hz)\n",delay,speed);
 #			endif
-			delay++;
-			no++;
-			if (delay<256) {
-				obuf[o++]=CODEMAP_SHORT_DELAY;
-				obuf[o++]=delay;
-			} else {
+			if (delay>256) {
 				obuf[o++]=CODEMAP_LONG_DELAY;
-				obuf[o++]=delay>>8;
+				obuf[o++]=(delay>>8)-1;
+				delay&=0xFF;
+				no++;
+			}
+			if (delay) {
 				obuf[o++]=CODEMAP_SHORT_DELAY;
-				obuf[o++]=delay&255;
+				obuf[o++]=delay-1;
 				no++;
 			}
 		}
 	}
 	// ok, fix the header with lengths information
+	obuf[DRO_LENGTH_UINT32LE]=no&255; // can't be larget than 64K, and high bytes are reset already
+	obuf[DRO_LENGTH_UINT32LE+1]=no>>8;
+	// well, we don't need this (in my player), but anyway ...
+	// here we use all of the 32 bits, since the length of the
+	// song can be more than 64K msecs (about one minute)
+	obuf[DRO_MS_UINT32LE]=msecs&255;
+	obuf[DRO_MS_UINT32LE+1]=(msecs>>8)&255;
+	obuf[DRO_MS_UINT32LE+2]=(msecs>>16)&255;
+	obuf[DRO_MS_UINT32LE+3]=msecs>>24;
 	// some misc printing
 	printf("---- END ----\n");
 	printf("IP=%d OP=%d NI=%d NO=%d\n",i,o,ni,no);
@@ -243,7 +267,7 @@ int main ( int argc, char **argv )
 		fprintf(stderr,"Too long IMF size to convert (limit is: %d bytes)\n",MAX_IMF_FILE_SIZE);
 		return 1;
 	}
-	if (read(fd,ibuf,size)!=size) {
+	if (read(fd,ibuf,size+1)!=size) { // we try to read size+1, but we except size. Anyway we make buffer larger with one byte not to cause buffer overrun
 		close(fd);
 		fprintf(stderr,"Input file read error\n");
 		return 1;
