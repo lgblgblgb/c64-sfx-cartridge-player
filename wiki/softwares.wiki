@@ -18,4 +18,4 @@ PC (UNIX) tool: convert (AdLib) [S3M] file to [DRO]. Purpose: test S3M parsing i
 
 == droplayer.c ==
 
-PC (UNIX) tool using libasound (ALSA): plays DRO files on PC, using the software OPL2 emulation. Used to test quickly the generated DRO files (produced by the converters above) on the PC.
+PC (UNIX) tool using libasound (ALSA): plays [DRO] files on PC, using the software OPL2 emulation. Used to test quickly the generated [DRO] files (produced by the converters above) on the PC.
