@@ -2,7 +2,8 @@
 
 = Softwares =
 
-The programs/tools you can find here.
+The programs/tools you can find here. Visit [download this page] for instructions how you can download, compile and use these softwares.
+
 
 == c64_play.asm ==
 
