@@ -12,9 +12,10 @@
     * [AdPlug AdPlug player]
     * [VICE VICE CBM emulator]
     * [cc65 C compiler and assembler for 6502]
-    * My player for C64
+    * My player for C64 + tools
       * [demo Demo of the player (video)]
       * [download Download/compilation]
+      * [pc-tools PC tools]
   * Formats
     * [IMF]
     * [DRO]
