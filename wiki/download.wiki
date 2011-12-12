@@ -21,6 +21,6 @@ Also you need to have installed [VICE] emulator to test the result but also to b
 
 You should read the assembly source file [http://code.google.com/p/c64-sfx-cartridge-player/source/browse/trunk/c64_play.asm c64_play.asm], it contains tons of comments at the beginning including these information.
 
-Note: you need a DRO file to use the player, it's not the part of the source repository!
+Note: you need a [DRO] file to use the player, it's not the part of the source repository!
 
 If everything works, you should see/hear something [demo like this].
