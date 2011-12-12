@@ -1,0 +1,21 @@
+#summary My softwares.
+
+= Softwares =
+
+The programs/tools you can find here.
+
+== c64_play.asm ==
+
+This is the actual player for C64.
+
+== imf2dro.c ==
+
+PC (UNIX) tool: convert [IMF] file to [DRO]. Purpose: test IMF parsing in C. Later, the C64 player will play [IMF] files directly without this converter.
+
+== s3m2dro.c ==
+
+PC (UNIX) tool: convert (AdLib) [S3M] file to [DRO]. Purpose: test S3M parsing in C. Later, the C64 player will play (AdLib) [S3M] files directly without this converter.
+
+== droplayer.c ==
+
+PC (UNIX) tool using libasound (ALSA): plays DRO files on PC, using the software OPL2 emulation. Used to test quickly the generated DRO files (produced by the converters above) on the PC.
