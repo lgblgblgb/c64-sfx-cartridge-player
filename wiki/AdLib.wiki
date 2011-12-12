@@ -1,4 +1,4 @@
-#summary Description of "AdLib"
+#summary About the AdLib PC 8-bit ISA card and the YM3812 chip.
 
 = Introduction =
 
