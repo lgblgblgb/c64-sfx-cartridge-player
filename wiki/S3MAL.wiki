@@ -4,7 +4,7 @@
 
 [S3M] is a nice format for store AdLib songs (digital sampled version - which is the most common as with any module format - is not interesting for us now). However it has some complexity which is not always needed if we want only AdLib instruments, easy usage on a C64, and so on.
 
-S3MAL is my own creation to have a simplified format. Strictly speaking, it's not even a format, the converter which produces S3MAL from S3M generates assembly files which must be compiled with the [cc65 CA65 assembler]. You can - in theory - assemble that file, but it's useless, as information encoded as labels. This is natural however, since the purpose of S3MAL is to build a song into your program: *it's not a loadable format*.
+S3MAL is my own creation to have a simplified format. Strictly speaking, it's not even a format, the converter which produces S3MAL from S3M generates assembly files which must be compiled with the [cc65 CA65 assembler]. You can - in theory - assemble that file (into a separate "binary"), but it's useless, as information encoded as labels. This is natural however, since the purpose of S3MAL is to build a song into your program (to link with the player code which uses the provided labels): *it's not a loadable format*.
 
 = Details =
 
