@@ -26,7 +26,7 @@ Low&high bytes of the addresses of the instruments.
 
 == Patterns ==
 
-First, an important note: [S3M] specifies that patterns should be always 64 rows in size. In S3MAL there is no an exact size. The pattern can be smaller and longer too. It's really not important to know, only if you have some special command (jump) in the patterns. Then, converter will encode the patterns in a way that it will work. But you must not treat to have standard [S3M] patterns! It's also possible that the pattern table contain a *single* entry with hundreds of rows, and that contains the whole song! It helps to decrease the complexity of the file, and also playing code use more CPU of course, if you need to "seek" to a new pattern.
+First, an important note: [S3M] specifies that patterns should be always 64 rows in size. In S3MAL there is no an exact size. The pattern can be smaller and longer too. It's really not important to know, only if you have some special command (jump) in the patterns. Then, converter will encode the patterns in a way that it will work. But you must not treat to have standard [S3M] patterns! It's also possible that the pattern table contain a *single* entry: a pattern with hundreds of rows, and that contains the whole song! It helps to decrease the complexity of the file, and also playing code use more CPU of course, if you need to "seek" to a new pattern. It's the converter task to optimize and "decide" how to "slice" the song into patterns: there is no relation with the original [S3M] patterns at all (only with some special commands).
 
 Unlike [S3M]'s pattern, you always have 9 channels, no more or less. These are always mapped directly to the 9 AdLib channels, no channel mapping.
 
