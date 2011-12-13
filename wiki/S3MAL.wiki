@@ -41,3 +41,13 @@ The pattern "compression" algorithm is somewhat similar to the [S3M]'s but with 
  * if bit 5 is 1, read one byte: it adjust the volume of the channel. If bit 5 is zero, there is no change in the volume.
  * if bit 6 is 1, read two bytes: the first is the command code, the second is the command data. If bit 6 is zero, no command.
  * if bit 7 is set, it's a special byte, the the meaning of the bits etc does not apply! So "negative numbers" (can be tested with BPL/BMI in assembly) are the special ones.
+
+The special bytes (bit 7 is set):
+
+ * $FF: end of the whole pattern
+ * $FE: end of the row
+ * $Ex: skip "x" number for rows, they are treated as empty ones
+
+Other values are not used.
+
+The default ("empty") values for tone/instrument/volume/command is the same as with [S3M]. Also the commands.
