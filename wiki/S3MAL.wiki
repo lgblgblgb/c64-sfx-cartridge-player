@@ -33,7 +33,7 @@ Unlike [S3M]'s pattern, you always have 9 channels, no more or less. These are a
 The pattern "compression" algorithm is somewhat similar to the [S3M]'s but with some modifications. The algorithm is about this:
 
  * seek to the needed pattern (given by pattern table)
- * now read a single byte]
+ * now read a single byte
  * if bit 7 is set, it's a *special* byte, the following points does not apply, read later at bit 7 related lines again
  * otherwise, the lower 4 bits contain the AdLib channel, only values 0-8 are valid (S3MAL files should not have other values)
  * the high 4 bites encodes the need of reading more byte(s)
@@ -41,6 +41,7 @@ The pattern "compression" algorithm is somewhat similar to the [S3M]'s but with 
  * if bit 5 is 1, read one byte: it adjust the volume of the channel. If bit 5 is zero, there is no change in the volume.
  * if bit 6 is 1, read two bytes: the first is the command code, the second is the command data. If bit 6 is zero, no command.
  * if bit 7 is set, it's a special byte, the the meaning of the bits etc does not apply! So "negative numbers" (can be tested with BPL/BMI in assembly) are the special ones.
+ * play (or not play - if there is nothing to do) and/or process pattern command (if any), keep the timing in your mind, then continue with the "now read a single byte" step (unless the pattern is over, the song is over, or a command specifies some special jump instruction)
 
 The special bytes (bit 7 is set):
 
