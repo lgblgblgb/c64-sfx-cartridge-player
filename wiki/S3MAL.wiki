@@ -25,3 +25,19 @@ Low&high bytes of the addresses of the instruments.
 == Instruments ==
 
 == Patterns ==
+
+First, an important note: [S3M] specifies that patterns should be always 64 rows in size. In S3MAL there is no an exact size. The pattern can be smaller and longer too. It's really not important to know, only if you have some special command (jump) in the patterns. Then, converter will encode the patterns in a way that it will work. But you must not treat to have standard [S3M] patterns! It's also possible that the pattern table contain a *single* entry with hundreds of rows, and that contains the whole song! It helps to decrease the complexity of the file, and also playing code use more CPU of course, if you need to "seek" to a new pattern.
+
+Unlike [S3M]'s pattern, you always have 9 channels, no more or less. These are always mapped directly to the 9 AdLib channels, no channel mapping.
+
+The pattern "compression" algorithm is somewhat similar to the [S3M]'s but with some modifications. The algorithm is about this:
+
+ * seek to the needed pattern (given by pattern table)
+ * now read a single byte]
+ * if bit 7 is set, it's a *special* byte, the following points does not apply, read later at bit 7 related lines again
+ * otherwise, the lower 4 bits contain the AdLib channel, only values 0-8 are valid (S3MAL files should not have other values)
+ * the high 4 bites encodes the need of reading more byte(s)
+ * if bit 4 is 1, read two byes, the first is the note, the second is the instrument number. if bit 4 is zero, the default value is assumed: no new tone is generated here. Note=$FE is a special value: it's the AdLib key-off event as with [S3M].
+ * if bit 5 is 1, read one byte: it adjust the volume of the channel. If bit 5 is zero, there is no change in the volume.
+ * if bit 6 is 1, read two bytes: the first is the command code, the second is the command data. If bit 6 is zero, no command.
+ * if bit 7 is set, it's a special byte, the the meaning of the bits etc does not apply! So "negative numbers" (can be tested with BPL/BMI in assembly) are the special ones.
