@@ -20,6 +20,7 @@
     * [IMF]
     * [DRO]
     * [S3M]
+    * [S3M/lite]
 
 *External resources*
 
