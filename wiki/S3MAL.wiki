@@ -15,7 +15,7 @@ The generated assembly file (which is [cc65 CA65 assembler] syntax!) contains th
  * s3mal_patterns_lo
  * s3mal_patterns_hi
 
-Low&high bytes of the addresses of the patterns. Note: there is no "order table"! The pattern table is used as order table too: your player should simply play patterns specified here, until high byte is zero, which signals the end of the song. Or you can use the following constant: s3mal_pattern which does not include the last "closing" entry in the table (with high byte as zero).
+Low&high bytes of the addresses of the patterns. Note: there is no "order table"! The pattern table is used as order table too: your player should simply play patterns specified here, until "song end" information is found during pattern decoding (see later).
 
  * s3mal_inst_lo
  * s3mal_inst_hi
