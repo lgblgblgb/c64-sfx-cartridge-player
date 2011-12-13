@@ -6,6 +6,8 @@
 
 S3MAL is my own creation to have a simplified format. Strictly speaking, it's not even a format, the converter which produces S3MAL from S3M generates assembly files which must be compiled with the [cc65 CA65 assembler]. You can - in theory - assemble that file (into a separate "binary"), but it's useless, as information encoded as labels. This is natural however, since the purpose of S3MAL is to build a song into your program (to link with the player code which uses the provided labels): *it's not a loadable format*.
 
+For sure, for shorter songs using [DRO] or [IMF] format is better but it wastes memory a lot: every AdLib register event is described, using a structured format with separated instrument information (like [S3M] in general, or the "simplified" format S3MAL) the size can be smaller - however you need more CPU power to decode/play though.
+
 = Details =
 
 The generated assembly file (which is [cc65 CA65 assembler] syntax!) contains the following important labels you must use:
