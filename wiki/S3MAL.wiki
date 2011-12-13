@@ -46,6 +46,7 @@ The special bytes (bit 7 is set):
 
  * $FF: end of the whole pattern
  * $FE: end of the row
+ * $FD: end of the *whole song*
  * $Ex: skip "x" number for rows, they are treated as empty ones
 
 Other values are not used.
