@@ -20,7 +20,7 @@
     * [IMF]
     * [DRO]
     * [S3M]
-    * [S3MAL S3MAL - Simplified AdLib S3M based format]
+    * [S3MAL S3MAL - Simplified AdLib S3M based "format"]
 
 *External resources*
 
