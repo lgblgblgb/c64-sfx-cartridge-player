@@ -2,12 +2,8 @@
 
 = S3MAL - S3M (AdLib) Lite =
 
-Add your content here.
+[S3M] is a nice format for store AdLib songs (digital sampled version - which is the most common as with any module format - is not interesting for us now). However it has some complexity which is not always needed if we want only AdLib instruments, easy usage on a C64, and so on.
 
+S3MAL is my own creation to have a simplified format. It's not compatible with S3M (an [S3M] player won't load S3MAL and vice versa). Currently it's under development.
 
 = Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
