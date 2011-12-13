@@ -8,7 +8,7 @@ S3MAL is my own creation to have a simplified format. Strictly speaking, it's no
 
 = Details =
 
-The generated assembly file (which is ([cc65 CA65 assembler] syntax!) contains the following important labels you must use:
+The generated assembly file (which is [cc65 CA65 assembler] syntax!) contains the following important labels you must use:
 
 s3mal_order_table
 
