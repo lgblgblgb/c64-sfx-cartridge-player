@@ -22,19 +22,6 @@ Low&high bytes of the addresses of the patterns. Note: there is no "order table"
 
 Low&high bytes of the addresses of the instruments.
 
-Sample code to "seek" into a pattern (ZP is two byte zeropage, it will be used in later examples, PATZP is one byte zeropage it contains the current pattern, should be zero at the beginning):
-
-{{{
-LDX PATZP
-LDA s3mal_patterns_hi,X
-BEQ end_of_the_whole_song
-STA ZP+1
-LDA s3mal_patterns_lo,X
-STA ZP
-}}}
-
-Now "ZP" is initialized, see section "patterns" about a propose how to use that then for deconding and playing the pattern on-the-fly.
-
 == Instruments ==
 
 == Patterns ==
@@ -92,6 +79,17 @@ INC ZP+1
 After loading the "first byte" you can use BMI opcode: if bit 7 is set, it's a special byte (not encoded as channel + bit mask of things to read).
 
 Also, it's natural to play sounds while decoding: after you read a "column", you can play the note (or anything it's about ...) on the specified channel. No need to decode pattern first (it's possible there is not even enough memory for that!) to play it in an undecoded form, it is just waste of your CPU, as decoding is needed anyway, so it's faster to also play then.
+
+The "seek to pattern" can be done this way (this initializes ZP we used in our previous examples, PATZP is also a zero page location which contains the current pattern number, you want to increase it after playing a pattern, unless there is some special command like "jump"):
+
+{{{
+LDX PATZP
+LDA s3mal_patterns_hi,X
+BEQ end_of_the_whole_song
+STA ZP+1
+LDA s3mal_patterns_lo,X
+STA ZP
+}}}
 
 == Commands ==
 
