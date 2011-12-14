@@ -78,6 +78,8 @@ INC ZP+1
 
 After loading the "first byte" you can use BMI opcode: if bit 7 is set, it's a special byte (not encoded as channel + bit mask of things to read).
 
+Also, it's natural to play sounds while decoding: after you read a "column", you can play the note (or anything it's about ...) on the specified channel. No need to decode pattern first (it's possible there is not even enough memory for that!) to play it in an undecoded form, it is just waste of your CPU, as decoding is needed anyway, so it's faster to also play then.
+
 == Commands ==
 
 The most complex part of [S3M] (and module formats in general - I mean implementing all of the commands) are the commands (at least this is my opinion). As S3MAL wants to be a light version we don't support every commands S3M knows about.
