@@ -22,6 +22,19 @@ Low&high bytes of the addresses of the patterns. Note: there is no "order table"
 
 Low&high bytes of the addresses of the instruments.
 
+Sample code to "seek" into a pattern (ZP is two byte zeropage, it will be used in later examples, PATZP is one byte zeropage it contains the current pattern, should be zero at the beginning):
+
+{{{
+LDX PATZP
+LDA s3mal_patterns_hi,X
+BEQ end_of_the_whole_song
+STA ZP+1
+LDA s3mal_patterns_lo,X
+STA ZP
+}}}
+
+Now "ZP" is initialized, see section "patterns" about a propose how to use that then for deconding and playing the pattern on-the-fly.
+
 == Instruments ==
 
 == Patterns ==
