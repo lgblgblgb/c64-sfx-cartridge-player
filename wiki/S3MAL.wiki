@@ -56,6 +56,18 @@ The default ("empty") values for tone/instrument/volume/command is the same as w
 
 It's possible (like with [S3M]) to encode more "columns" for the same AdLib channel in a row: however that situation is quite undefined, and the converter will not produce such a file!
 
+=== Pattern decoding in play-time ===
+
+Implementation notes: you may want a zero page location contains the current byte location by the pattern decoder. It's initialized by the "pattern seek" from the pattern table. Then, you may want to read bytes like this (after initialization Y to zero):
+
+{{{
+LDA (ZP),Y
+}}}
+
+Then just increment Y then do that loading for situations you need to read one byte. If row is over however, you must add Y to the zero page location and you should use Y=0 again for the next row, as +255 as offset (specified by Y register) is not enough in most cases to decode a whole pattern (especially because pattern length can be quite long in S3MAL).
+
+After loading the "first byte" you can use BMI opcode: if bit 7 is set, it's a special byte (not encoded as channel + bit mask of things to read).
+
 == Commands ==
 
 The most complex part of [S3M] (and module formats in general - I mean implementing all of the commands) are the commands (at least this is my opinion). As S3MAL wants to be a light version we don't support every commands S3M knows about.
