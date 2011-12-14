@@ -69,7 +69,7 @@ LDA s3mal_patterns_lo,X
 STA ZP
 }}}
 
-Then, you may want to read bytes like this (after initialization Y to zero):
+Then, to decode patterns, you may want to read bytes like this (after initialization Y to zero):
 
 {{{
 LDA (ZP),Y
