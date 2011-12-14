@@ -58,7 +58,18 @@ It's possible (like with [S3M]) to encode more "columns" for the same AdLib chan
 
 === Pattern decoding in play-time ===
 
-Implementation notes: you may want a zero page location contains the current byte location by the pattern decoder. It's initialized by the "pattern seek" from the pattern table. Then, you may want to read bytes like this (after initialization Y to zero):
+Implementation notes: you may want a zero page location contains (two bytes) the current byte location by the pattern decoder, let's call it ZP. It's initialized by the "pattern seek" from the pattern table. PATZP is the actual pattern number, again a zero page location. It must be initialized zero at the very beginning, and usually you want to INC it after the end of the played pattern (unless there is something special, like "jump" command). The code can be something like this to "seek pattern" (also the "end of the song" situation is handled here):
+
+{{{
+LDX PATZP
+LDA s3mal_patterns_hi,X
+BEQ end_of_the_whole_song
+STA ZP+1
+LDA s3mal_patterns_lo,X
+STA ZP
+}}}
+
+Then, you may want to read bytes like this (after initialization Y to zero):
 
 {{{
 LDA (ZP),Y
@@ -79,17 +90,6 @@ INC ZP+1
 After loading the "first byte" you can use BMI opcode: if bit 7 is set, it's a special byte (not encoded as channel + bit mask of things to read).
 
 Also, it's natural to play sounds while decoding: after you read a "column", you can play the note (or anything it's about ...) on the specified channel. No need to decode pattern first (it's possible there is not even enough memory for that!) to play it in an undecoded form, it is just waste of your CPU, as decoding is needed anyway, so it's faster to also play then.
-
-The "seek to pattern" can be done this way (this initializes ZP we used in our previous examples, PATZP is also a zero page location which contains the current pattern number, you want to increase it after playing a pattern, unless there is some special command like "jump"):
-
-{{{
-LDX PATZP
-LDA s3mal_patterns_hi,X
-BEQ end_of_the_whole_song
-STA ZP+1
-LDA s3mal_patterns_lo,X
-STA ZP
-}}}
 
 == Commands ==
 
