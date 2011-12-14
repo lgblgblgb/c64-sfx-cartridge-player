@@ -59,6 +59,6 @@ It's possible (like with [S3M]) to encode more "columns" for the same AdLib chan
 
 == Commands ==
 
-The most complex part of [S3M] (and module formats in general) are the commands (at least this is my opinion). As S3MAL wants to be a light version we don't support every commands S3M knows about.
+The most complex part of [S3M] (and module formats in general - I mean implementing all of the commands) are the commands (at least this is my opinion). As S3MAL wants to be a light version we don't support every commands S3M knows about.
 
 *Important note*: as stated in the previous section (patterns) a command can have zero, one or more bytes as parameter. This is *unlike [S3M]* where command always have one byte as a parameter! The reason for more bytes: some specific commands (like jump) uses memory addresses instead for easier/faster decoding.
