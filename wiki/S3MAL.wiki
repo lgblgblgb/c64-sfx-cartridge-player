@@ -64,7 +64,17 @@ Implementation notes: you may want a zero page location contains the current byt
 LDA (ZP),Y
 }}}
 
-Then just increment Y then do that loading for situations you need to read one byte. If row is over however, you must add Y to the zero page location and you should use Y=0 again for the next row, as +255 as offset (specified by Y register) is not enough in most cases to decode a whole pattern (especially because pattern length can be quite long in S3MAL).
+Then just increment Y then do that loading for situations you need to read one byte. If row is over however, you must add Y to the zero page location and you should use Y=0 again for the next row, as +255 as offset (specified by Y register) is not enough in most cases to decode a whole pattern (especially because pattern length can be quite long in S3MAL). Example for this addition:
+
+{{{
+TYA
+CLC
+ADC ZP
+STA ZP
+BCC no_need_to_modify_high_byte
+INC ZP+1
+...
+}}}
 
 After loading the "first byte" you can use BMI opcode: if bit 7 is set, it's a special byte (not encoded as channel + bit mask of things to read).
 
