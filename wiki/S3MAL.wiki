@@ -15,7 +15,7 @@ The generated assembly file (which is [cc65 CA65 assembler] syntax!) contains th
  * s3mal_patterns_lo
  * s3mal_patterns_hi
 
-Low&high bytes of the addresses of the patterns. Note: there is no "order table"! The pattern table is used as order table too: your player should simply play patterns specified here, until "song end" information is found during pattern decoding (see later).
+Low&high bytes of the addresses of the patterns. Note: there is no "order table"! The pattern table is used as order table too: your player should simply play patterns specified here, until the high byte is zero: it specifies the end of the song (low byte is undefined in that case, you should not assume there is valid information there then!)
 
  * s3mal_inst_lo
  * s3mal_inst_hi
@@ -35,21 +35,20 @@ The pattern "compression" algorithm is somewhat similar to the [S3M]'s but with 
  * seek to the needed pattern (given by pattern table)
  * now read a single byte
  * if bit 7 is set, it's a *special* byte, the following points does not apply, read later at bit 7 related lines again
- * otherwise, the lower 3 bits contain the AdLib channel (remember, you have 8 channels only, not 9!
+ * otherwise, the lower 3 bits contain the AdLib channel (remember, you have 8 channels only, not 9!)
  * the high 5 bites encodes the need of reading more byte(s)
- * if bit 3 is 1, read one byte, it's the tone information. The instrument will be used to play: the previous one used *in this channel* unless if bit is 1, see below. Note=$FE is special, key-of AdLib event (see in [S3M]).
+ * if bit 3 is 1, read one byte, it's the tone information. The instrument will be used to play: the previous one used *in this channel* unless if bit 4 is 1, see below. Note=$FE is special, key-off AdLib event (see in [S3M] specification).
  * if bit 4 is 1, read one byte, the instrument number. It also affects the "last used instrument in this channel" info: the next row for same channel will use this instrument as well if no instrument specification is done for it!
  * if bit 5 is 1, read one byte: it adjust the volume of the channel. If bit 5 is zero, there is no change in the volume.
- * if bit 6 is 1, read one byte (first): the first is the command code, the second is the command data. If bit 6 is zero, no command. If there is a command, the command can have some command info bytes you should read. You can't tell how much bytes though: you must examine the command (see later) to know that information!
+ * if bit 6 is 1, read one byte: that is the command code. If bit 6 is zero, no command. If there is a command, the command can have some command info bytes you should read. You can't tell how much bytes though: you must examine the exact command (see later) to know that information!
  * if bit 7 is set, it's a special byte, the the meaning of the bits etc does not apply! So "negative numbers" (can be tested with BPL/BMI in assembly) are the special ones.
  * play (or not play - if there is nothing to do) and/or process pattern command (if any), keep the timing in your mind, then continue with the "now read a single byte" step (unless the pattern is over, the song is over, or a command specifies some special jump instruction)
 
-The special bytes (bit 7 is set):
+The special bytes (if bit 7 is set only, so if the number is "negative" is you interpret the byte as 8 bit signed otherwise):
 
  * $FF: end of the whole pattern
  * $FE: end of the row
- * $FD: end of the *whole song*
- * $Ex: skip "x" number for rows, they are treated as empty ones
+ * $Ex: skip "x" number for rows, they are treated as empty ones, it also means the end of the current row!
 
 Other values are not used.
 
