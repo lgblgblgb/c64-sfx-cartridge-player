@@ -2,7 +2,7 @@
 
 = The S3M format =
 
-S3M is the module format of the famous DOS based tracker Stream Tracker 3 from Future Crew.
+S3M is the module format of the famous DOS based tracker Stream Tracker 3 from Future Crew. From now, S3M will mean only the features/files use AdLib instruments!
 
 = Details =
 
