@@ -14,6 +14,6 @@ The heart of AdLib is a chip named YM3812. Fortunately, it's not so hard to use 
 
 http://www.oplx.com/opl2/docs/adlib_sb.txt
 
-= AdLib modules =
+= AdLib modules (various formats) =
 
 ftp://modland.ziphoid.com/pub/modules/Ad%20Lib/
