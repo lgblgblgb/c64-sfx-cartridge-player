@@ -1,0 +1,9 @@
+*.o
+*.swp
+*.py[co]
+*.prg
+*.bin
+*.d64
+*.d81
+*.map
+*.lab
