@@ -24,6 +24,7 @@
 ;	Get ca65 from the cc65 suite (www.cc65.org). Yes, it's a C
 ;	compiler for 6502 in general, but we need only the
 ;	assembler&linker only, not the compiler itself.
+;	GNU make
 ; Preparation:
 ;	You must get a DRO (v2) file from somewhere (grab one with DOSBOX
 ;	for example), you must place it into the directory where this
@@ -33,10 +34,9 @@
 ;	PLEASE CONTACT ME, if you have DRO file which can be distributed
 ;	- as an example - with the source! IT WOULD BE REALLY NICE!
 ; Compilation:
-;	Command: cl65 -t c64 -o c64_play.prg c64_play.asm
-;	Do not forget the "-t c64"!
+;	Simply say: make
 ; Test (with VICE emulator):
-;	Command: x64 -sfxse -sfxsetype 3812 -autostart c64_play.prg
+;	use "make vice" to start VICE with the program
 ;	You can configure the SFX Sound Expander cartridge "by hand"
 ;	too in the menu of the VICE, of course. About VICE: it did not
 ;	work for me (version 2.3) on Linux (no sound and/or even crash),
@@ -63,23 +63,42 @@
 ;	  test the stuff without a cartridge too
 ; ---------------------------------------------------------------------
 
+.IFDEF MEGA65
+.SETCPU "4510"
+.MACRO SET_OPL_Z
+	NOP
+	STA	(oplregs),Z
+.ENDMACRO
+.ENDIF
+
+
 .ZEROPAGE
 
 ZP:	.RES 2 ; general purpose zeropage locations we use (two bytes)
 song_p:	.RES 2 ; byte pointer inside the DRO stream (two bytes)
+.IFDEF MEGA65
+oplregs:.RES 4
+.ENDIF
 
 .BSS
 
 screen_reg_addrs: .RES 512
 
-.SEGMENT "ZPSAVE"  ; not used here so much
+;.SEGMENT "ZPSAVE"  ; not used here so much
+;.SEGMENT "INIT"
+;.SEGMENT "ONCE"
+
+.CODE
+
+.ORG $7FF
+
 
 ; BASIC stub: do NOT place anything into the STARTUP segment
 ; before the stub itself!
-.SEGMENT "STARTUP"
+;.SEGMENT "STARTUP"
 .WORD basic_loader
 basic_loader:
-        .WORD @lastline,-1
+        .WORD @lastline,2012
         .BYTE $9E ; "SYS" basic token
         .BYTE $30+.LOBYTE(main/10000)
         .BYTE $30+.LOBYTE((main .MOD 10000)/1000)
@@ -201,6 +220,25 @@ show_hex_byte:  ; A=byte, ZP: screen address base, Y = offset (from ZP)
 
 
 reset_sfx:
+.IFDEF MEGA65
+	; Setting up memory pointer
+	; MEGA65 I/O address: FE000xx -> 0F E0 00 xx
+	LDA #$00
+	STA oplregs
+	STA oplregs+1
+	LDA #$E0
+	STA oplregs+2
+	LDA #$0F
+	STA oplregs+3
+	; Write zeroes for all registers:
+	LDA #0
+	LDZ #0
+:	SET_OPL_Z
+	INZ
+	STZ $D020
+	BNE :-
+	RTS
+.ELSE
 	LDA #0
 	TAY
 :	STY SFX_YM_SELECT_REGISTER ; select YM register
@@ -217,11 +255,23 @@ reset_sfx:
         STY $D020 ; it is really not needed :)
         BNE :--
 	RTS
+.ENDIF
 
 
 
 
 main:
+.IFDEF MEGA65
+	; Turn off "force fast" mode of MEGA65 just in case (player uses software timing ...)
+	LDA #64
+	STA 0
+	; Set MEGA65 I/O mode: not needed too much by this player yet, but maybe in the future
+	; CPU persona of MEGA65 defaults to 6510 (thus excluding the linear addressing we need!) in normal C64 VIC I/O mode ...
+	LDA #$47
+	STA $D02F
+	LDA #$53
+	STA $D02F
+.ENDIF
 	; Disable interrupts (timing can be "perfect")
 	; Note: later, the stuff should be rewritten to be
 	; IRQ based player ...
@@ -432,12 +482,20 @@ main:
 	; Note: we should use delays after writing registers (see: reset_sfx)
 	; However, at this point we have enough instructions between writes,
 	; so I simply don't need any additional delay (I hope so, at least)
+.IFDEF MEGA65
+	TAZ	; OPL register number only causes to set Z register on MEGA65
+.ELSE
 	STA SFX_YM_SELECT_REGISTER
+.ENDIF
 	STA ZP ; store YM register number in ZP
 	NOP ; anyway, it seems some delay needed at least HERE (before data write)
 	NOP
 	LDA ZP+1
+.IFDEF MEGA65
+	SET_OPL_Z	; use MEGA65 linear addressing, Z register is already set
+.ELSE
 	STA SFX_YM_DATA_REGISTER
+.ENDIF
 	; show it!
 	JSR show_reg
 	; check looping
