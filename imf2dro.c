@@ -134,7 +134,7 @@ static int convert ( int size )
 	unsigned int msecs=0;
 	i=ibuf[0]|(ibuf[1]<<8);
 	if (i) { // type-1 IMF file
-		if (size<i+2) {
+		if (size<i) {
 			fprintf(stderr,"Bad Type-1 IMF file\n");
 			return -1;
 		}

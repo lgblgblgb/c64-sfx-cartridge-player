@@ -3,9 +3,14 @@
 ; Sound Expander cartridge with YM3812 chip (the "normal" chip
 ; this cartridge was shipped with may work, but since OPL2 features
 ; do not exist on those, music will be somewhat "odd" to listen to).
+;                                --OR--
+; It will be able to run on MEGA65 using its built in implementation
+; of an OPL3 chip. Currently only tested with Xemu emulation of MEGA65,
+; which has some issues though.
+; ---------------------------------------------------------------------
 ; VERSION: 1.2a
 ; ---------------------------------------------------------------------
-; (C)2011 LGB (Gábor Lénárt) lgb@lgb.hu, this program can be used
+; (C)2011,2020-2021 LGB (Gábor Lénárt) lgb@lgb.hu, this program can be used
 ; according to the GNU/GPL 2 or 3 (or later, if a new one is released) license.
 ; License: http://www.gnu.org/licenses/gpl-2.0.html
 ; License: http://www.gnu.org/licenses/gpl-3.0.html
@@ -51,16 +56,18 @@
 ;	* thanks to Soci for suggesting devel version of VICE to test with
 ; ---------------------------------------------------------------------
 ; What I could test with VICE (video):
-;	http://www.youtube.com/watch?v=umiL62CPObg
+;	C64 (VICE emulation): http://www.youtube.com/watch?v=umiL62CPObg
+;       MEGA65 (Xemu emulation): https://www.youtube.com/watch?v=yEowEZfkLOY
 ; Project can be found here:
-;	https://code.google.com/p/c64-sfx-cartridge-player/
+;	https://github.com/lgblgblgb/c64-sfx-cartridge-player
 ; ---------------------------------------------------------------------
 ; TODO list:
 ;	* rework the player to use IRQ for playing
 ;	* get a "safe" (free to distribute) DRO music to include
 ;	* SID mode: try to mimic the cartridge with SID: will sound
 ;	  awful (with rapidly changed channels) but it can be used to
-;	  test the stuff without a cartridge too
+;	  test the stuff without a cartridge too (on C65/MEGA65
+;         or C64 with dual-SID, it can be more interesting though)
 ; ---------------------------------------------------------------------
 
 .IFDEF MEGA65
@@ -122,11 +129,11 @@ basic_loader:
 ; most of them at least are OK :)
 
 .REPEAT 26,l
-.CHARMAP l+97,l+1 ; lower case
-.CHARMAP l+65,l+65 ; upper case
+	.CHARMAP l + 97, l + 1	; lower case
+	.CHARMAP l + 65, l + 65	; upper case
 .ENDREP
-.CHARMAP 64,0  ; @
-.CHARMAP 95,100   ; _
+.CHARMAP 64, 0		; @
+.CHARMAP 95, 100	; _
 
 ;song_length		= song + 12  ; we don't use length currently, but the label after the included DRO to match against the position counter
 cmd_short_delay		= song + 23
@@ -168,7 +175,14 @@ LINE_COLOR		= 3
 ;.DEFINE DRO_FILE "dune_title.dro"
 .DEFINE DRO_FILE "test.dro"
 
-header: .BYTE " C64 DRO player v1.2a by LGB lgb@lgb.hu "
+header:
+	.BYTE " "
+.IFNDEF MEGA65
+	.BYTE "C64"
+.ELSE
+	.BYTE "M65"
+.ENDIF
+	.BYTE " DRO player v1.2a by LGB lgb@lgb.hu "
 header_size = * - header
 
 song:
@@ -183,7 +197,12 @@ dro_file_name_size = * - dro_file_name
 
 hextab: .BYTE "0123456789ABCDEF"
 
-msg: .BYTE    "Hold key 'x' to reset C64.     Delay:"
+msg:
+.IFNDEF MEGA65
+	.BYTE "Hold key 'x' to reset C64.     Delay:"
+.ELSE
+	.BYTE "Hold key 'x' to reset MEGA65.  Delay:"
+.ENDIF
 	.BYTE '-'+128
 	.BYTE 'S'+128
 	.BYTE 'L'+128
@@ -554,4 +573,7 @@ main:
 	LDA #%00001011
 	STA $D011
 	JSR reset_sfx
+	LDA $DC01
+	AND #%10000000
+	BEQ @reset
 	JMP 64738
