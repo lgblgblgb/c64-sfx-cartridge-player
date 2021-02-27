@@ -1,0 +1,19 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Update APT database
+      run: sudo apt-get -yq update || true
+    - name: Install OS packages for building
+      run: sudo apt-get -yq --no-install-suggests --no-install-recommends --force-yes install cc65 make bash
+    - name: Compiling for native (Linux)
+      run: make
+    - name: Show the result
+      run: ls -l m65_play.prg c64_play.prg *.dro || true
