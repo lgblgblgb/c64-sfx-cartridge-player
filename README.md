@@ -1,7 +1,9 @@
 DRO AdLib OPL2 player for Commodore 64 equipped with SFX Sound Expander
 cartridge with YM3812 chip (the "normal" chip this cartridge was shipped
 with may work, but since OPL2 features do not exist on those, music will
-be somewhat "odd" to listen to).
+be somewhat "odd" to listen to). Also a version for the **MEGA65**!
+
+_You can find some ready-to-use PRG files in the prg-files/ directory._
 
 Uses embedded DRO file, recorded by DOSBOX, currently, there is no
 possibility to "load" music on-the-fly, you must recompile the player
