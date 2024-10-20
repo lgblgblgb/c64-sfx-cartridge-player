@@ -310,15 +310,6 @@ reset_sfx:
 .ENDIF
 
 
-.IFDEF	MEGA65
-waitopl:
-	PHX
-	LDX #$98
-:	DEX
-	BNE :-
-	PLX
-	RTS
-.ENDIF
 
 
 main:
@@ -502,6 +493,9 @@ main:
 
 	; Clear SFX registers ...
 	JSR reset_sfx
+.IFDEF	MEGA65
+	JSR init_mixer
+.ENDIF
 	; Start playing actually ...
 @play_loop:
 	; show current position of playback (C64 memory address)
@@ -655,8 +649,36 @@ skip_mega_reg_tab:
 	.BYTE	0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0	; $9X
 	.BYTE	0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0	; $AX
 	.BYTE	0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0	; $BX
-	.BYTE	1,1,1,1, 1,1,1,1, 1,0,0,0, 0,0,0,0	; $CX
+	.BYTE	1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1	; $CX
 	.BYTE	0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0	; $DX
 	.BYTE	0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0	; $EX
 	.BYTE	0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0	; $FX
+
+waitopl:
+	PHX
+	LDX #$98
+:	DEX
+	BNE :-
+	PLX
+	RTS
+
+; Again, btoschi's code :)
+
+init_mixer:
+        ldx #00
+loop:
+        lda mixervals,x
+        sta $d6f4
+        inx
+        lda mixervals,x
+        sta $d6f5
+        inx
+        cpx #2*8
+        bne loop
+        rts
+mixervals: 				; reg, value
+	.byte $1c, $a0, $1d, $a0	; OPL_FM LFT
+	.byte $3c, $a0, $3d, $a0	; OPL_FM RGT
+	.byte $dc, $a0, $dd, $a0	; OPL_FM HDL
+	.byte $fc, $a0, $fd, $a0	; OPL_FM HDR
 .ENDIF
