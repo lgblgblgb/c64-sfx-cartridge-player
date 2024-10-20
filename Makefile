@@ -6,7 +6,7 @@ CL65	= cl65
 CL65OPT	= -t none
 VICE	= x64
 XEMU	= xemu-xmega65
-M65	= m65
+M65	= mega65_etherload
 ALLDEP	= Makefile test.dro ld.cfg
 
 all: $(PRG) $(PRG65)
@@ -28,7 +28,7 @@ xemu: $(PRG65)
 	$(XEMU) -prg $<
 
 mega65: $(PRG65)
-	$(M65) -F -4 -r $<
+	$(M65) -r $<
 
 clean:
 	rm -f *.o *.prg

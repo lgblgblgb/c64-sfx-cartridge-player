@@ -8,9 +8,9 @@
 ; of an OPL3 chip. Currently only tested with Xemu emulation of MEGA65,
 ; which has some issues though.
 ; ---------------------------------------------------------------------
-; VERSION: 1.2a
+; VERSION: 1.3a
 ; ---------------------------------------------------------------------
-; (C)2011,2020-2021 LGB (Gábor Lénárt) lgb@lgb.hu, this program can be used
+; (C)2011,2020-2021,2024 LGB (Gábor Lénárt) lgb@lgb.hu, this program can be used
 ; according to the GNU/GPL 2 or 3 (or later, if a new one is released) license.
 ; License: http://www.gnu.org/licenses/gpl-2.0.html
 ; License: http://www.gnu.org/licenses/gpl-3.0.html
@@ -71,11 +71,14 @@
 ; ---------------------------------------------------------------------
 
 .IFDEF MEGA65
-.SETCPU "4510"
-.MACRO SET_OPL_Z
-	NOP
-	STA	(oplregs),Z
-.ENDMACRO
+	.SETCPU "4510"
+	.MACRO STAOPL_Z
+		NOP
+		STA	(oplregs),Z
+	.ENDMACRO
+	D018_VALUE = 38 ; MEGA65
+.ELSE
+	D018_VALUE = 23 ; C64
 .ENDIF
 
 
@@ -91,21 +94,24 @@ oplregs:.RES 4
 
 screen_reg_addrs: .RES 512
 
-;.SEGMENT "ZPSAVE"  ; not used here so much
-;.SEGMENT "INIT"
-;.SEGMENT "ONCE"
-
 .CODE
 
+.IFDEF	MEGA65
+.ORG $1FFF
+.ELSE
 .ORG $7FF
-
+.ENDIF
 
 ; BASIC stub: do NOT place anything into the STARTUP segment
 ; before the stub itself!
 ;.SEGMENT "STARTUP"
 .WORD basic_loader
 basic_loader:
-        .WORD @lastline,2012
+        .WORD @lastline,2024
+.IFDEF	MEGA65
+	.WORD $02FE	; "BANK" BASIC10/65 token (double byte token!)
+        .BYTE "0:"
+.ENDIF
         .BYTE $9E ; "SYS" basic token
         .BYTE $30+.LOBYTE(main/10000)
         .BYTE $30+.LOBYTE((main .MOD 10000)/1000)
@@ -141,10 +147,16 @@ cmd_long_delay		= song + 24
 codemap_len		= song + 25
 codemap			= song + 26
 
+.IFNDEF MEGA65
 SFX_YM_SELECT_REGISTER	= $DF40
 SFX_YM_DATA_REGISTER	= $DF50
+.ENDIF
 
+.IFDEF MEGA65
+SCREEN_ADDRESS		= $0800
+.ELSE
 SCREEN_ADDRESS		= $0400
+.ENDIF
 COLOR_ADDRESS		= $D800
 COLOR_RAM_OFFSET	= COLOR_ADDRESS - SCREEN_ADDRESS
 REGDUMP_START_POS	= SCREEN_ADDRESS + 41
@@ -182,7 +194,7 @@ header:
 .ELSE
 	.BYTE "M65"
 .ENDIF
-	.BYTE " DRO player v1.2a by LGB lgb@lgb.hu "
+	.BYTE " DRO player v1.3a by LGB lgb@lgb.hu "
 header_size = * - header
 
 song:
@@ -241,20 +253,41 @@ show_hex_byte:  ; A=byte, ZP: screen address base, Y = offset (from ZP)
 reset_sfx:
 .IFDEF MEGA65
 	; Setting up memory pointer
-	; MEGA65 I/O address: FE000xx -> 0F E0 00 xx
+	; 7FFDF00 -> 07 FF DF 00
 	LDA #$00
 	STA oplregs
+	LDA #$DF
 	STA oplregs+1
-	LDA #$E0
+	LDA #$FF
 	STA oplregs+2
-	LDA #$0F
+	LDA #$07
 	STA oplregs+3
 	; Write zeroes for all registers:
 	LDA #0
-	LDZ #0
-:	SET_OPL_Z
-	INZ
-	STZ $D020
+	LDX #0
+:	LDZ #$40
+	TXA
+	STAOPL_Z
+	JSR waitopl
+	LDZ #$50
+	LDA #$00
+	STAOPL_Z
+	JSR waitopl
+	INX
+	BNE :-
+	; MEGA65 specific sequence which seems to be needed to produce any sound. Thanks, btoschi!
+	; ($C0...$C8, 9 registers)
+	LDX #$C0
+:	LDZ #$40
+	TXA
+	STAOPL_Z
+	JSR waitopl
+	LDZ #$50
+	LDA #$F0
+	STAOPL_Z
+	JSR waitopl
+	INX
+	CPX #$C9
 	BNE :-
 	RTS
 .ELSE
@@ -277,20 +310,18 @@ reset_sfx:
 .ENDIF
 
 
+.IFDEF	MEGA65
+waitopl:
+	PHX
+	LDX #$98
+:	DEX
+	BNE :-
+	PLX
+	RTS
+.ENDIF
 
 
 main:
-.IFDEF MEGA65
-	; Turn off "force fast" mode of MEGA65 just in case (player uses software timing ...)
-	LDA #64
-	STA 0
-	; Set MEGA65 I/O mode: not needed too much by this player yet, but maybe in the future
-	; CPU persona of MEGA65 defaults to 6510 (thus excluding the linear addressing we need!) in normal C64 VIC I/O mode ...
-	LDA #$47
-	STA $D02F
-	LDA #$53
-	STA $D02F
-.ENDIF
 	; Disable interrupts (timing can be "perfect")
 	; Note: later, the stuff should be rewritten to be
 	; IRQ based player ...
@@ -303,8 +334,28 @@ main:
 	; This is only a quick TEST, do not except advanced
 	; features now.
 	SEI
+.IFDEF MEGA65
+	LDA #0
+	TAZ
+	TAX
+	TAY
+	MAP
+	; Turn off "force fast" mode of MEGA65 just in case (player uses software timing ...)
+	LDA #64
+	STA 0
+	; Set MEGA65 I/O mode: not needed too much by this player yet, but maybe in the future
+	; CPU persona of MEGA65 [may?] defaults to 6510 (thus excluding the linear addressing we need!) in normal C64 VIC I/O mode ...
+	LDA #$47
+	STA $D02F
+	LDA #$53
+	STA $D02F
+	; ...
+	LDA #0
+	STA $D030
+	STA $D031
+.ENDIF
 	; Select lower-case character set
-	LDA #23
+	LDA #D018_VALUE
 	STA $D018
 	; "Nice" black screen, also clear it, with filling the color RAM as well
 	LDX #0
@@ -502,7 +553,14 @@ main:
 	; However, at this point we have enough instructions between writes,
 	; so I simply don't need any additional delay (I hope so, at least)
 .IFDEF MEGA65
-	TAZ	; OPL register number only causes to set Z register on MEGA65
+		; Check if register is not forbidden to write
+		; THIS IS MY LAST ATTEMPT to try to make it work with MEGA65 with disallowing
+		; DRO to modify certain registers ...
+		TAX
+		LDY skip_mega_reg_tab,X
+		BNE @skipmegareg
+	LDZ #$40
+	STAOPL_Z
 .ELSE
 	STA SFX_YM_SELECT_REGISTER
 .ENDIF
@@ -511,10 +569,12 @@ main:
 	NOP
 	LDA ZP+1
 .IFDEF MEGA65
-	SET_OPL_Z	; use MEGA65 linear addressing, Z register is already set
+	LDZ #$50
+	STAOPL_Z
 .ELSE
 	STA SFX_YM_DATA_REGISTER
 .ENDIF
+@skipmegareg:
 	; show it!
 	JSR show_reg
 	; check looping
@@ -576,4 +636,27 @@ main:
 	LDA $DC01
 	AND #%10000000
 	BEQ @reset
-	JMP 64738
+	LDA #$FF
+	STA 1
+	JMP ($FFFC)
+
+
+.IFDEF	MEGA65
+skip_mega_reg_tab:
+	.BYTE	0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0	; $0X
+	.BYTE	0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0	; $1X
+	.BYTE	0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0	; $2X
+	.BYTE	0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0	; $3X
+	.BYTE	0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0	; $4X
+	.BYTE	0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0	; $5X
+	.BYTE	0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0	; $6X
+	.BYTE	0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0	; $7X
+	.BYTE	0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0	; $8X
+	.BYTE	0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0	; $9X
+	.BYTE	0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0	; $AX
+	.BYTE	0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0	; $BX
+	.BYTE	1,1,1,1, 1,1,1,1, 1,0,0,0, 0,0,0,0	; $CX
+	.BYTE	0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0	; $DX
+	.BYTE	0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0	; $EX
+	.BYTE	0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0	; $FX
+.ENDIF
